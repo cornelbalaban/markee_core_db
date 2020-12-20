@@ -1,0 +1,19 @@
+enum class SystemProperties(val stringValue: String) {
+
+    MYSQL_HOST("mysqlDbHost"),
+    MYSQL_PORT("mysqlDbPort"),
+    MYSQL_USER("mysqlUser"),
+    MYSQL_PWD("mysqlPwd"),
+    NOSQL_HOST("mongoDbHost"),
+    NOSQL_PORT("mongoDbPort"),
+    USERS_DB("markee_users")
+
+}
+
+enum class MarkeeUsersTables(val stringValue: String) {
+
+    USERS_TABLE("users_usr"),
+    CUSTOMERS_TABLE("customers_cust"),
+    PROJECT_KEYS_TABLE("projects_keys")
+
+}
