@@ -14,16 +14,21 @@ repositories {
 dependencies {
 
     def mysqlConnectionVersion = '5.1.6'
-    def kotlin_exposed_version = '0.25.1'
+    def kotlin_exposed_version = '0.28.1'
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    compile "mysql:mysql-connector-java:5.1.6"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    compile "mysql:mysql-connector-java:8.0.19"
+    //compile "org.mariadb.jdbc:mariadb-java-client:2.1.2"
     compile "com.zaxxer:HikariCP:3.4.5"
+    compile "org.jetbrains.kotlin:kotlin-reflect:1.4.21"
     compile "org.jetbrains.exposed:exposed-core:$kotlin_exposed_version"
     compile "org.jetbrains.exposed:exposed-dao:$kotlin_exposed_version"
     compile "org.jetbrains.exposed:exposed-jdbc:$kotlin_exposed_version"
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile "mysql:mysql-connector-java:8.0.19"
+    testImplementation "org.mockito:mockito-core:1.+"
+    testCompile "com.zaxxer:HikariCP:3.4.5"
 }
 
 compileKotlin {

@@ -23,18 +23,22 @@ internal class DbConnectionPool(dbHost: String,
 
 
 
-    private val connectionOptions = "?autoReconnect=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/Bucharest\""
+    private val connectionOptions = ""
 
     init {
 
         datasourceConfig.apply {
 
-            jdbcUrl = "jdbc:mysql://$dbHost:$dbPort/$dbName$connectionOptions"
+            //driverClassName = "org.mariadb.jdbc.Driver"
+            //jdbcUrl = "jdbc:mariadb://$dbHost:$dbPort/$dbName"
+            jdbcUrl = "jdbc:mysql://$dbHost:$dbPort/$dbName"
+            driverClassName = "com.mysql.cj.jdbc.Driver"
             username = dbUser
             password = dbPass
-            addDataSourceProperty(STATEMENTS_CACHE, "true")
-            addDataSourceProperty(STATEMENTS_CACHE_SIZE, "250")
-            addDataSourceProperty(STATEMENTS_CACHE_SQL_LIMIT, "2048")
+            connectionTimeout = 20000
+            //addDataSourceProperty(STATEMENTS_CACHE, "true")
+            //addDataSourceProperty(STATEMENTS_CACHE_SIZE, "250")
+            //addDataSourceProperty(STATEMENTS_CACHE_SQL_LIMIT, "2048")
             maximumPoolSize = 10 //this is actually the default
 
         }

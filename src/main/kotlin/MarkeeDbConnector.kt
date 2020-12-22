@@ -1,6 +1,4 @@
-import com.zaxxer.hikari.HikariDataSource
 import org.jetbrains.exposed.sql.Database
-import java.sql.Connection
 import java.util.*
 
 private const val IS_DEBUG = true
@@ -20,7 +18,7 @@ object MarkeeDbConnector {
 
         val usersDatasource = DbConnectionPool(systemProperties.getProperty(SystemProperties.MYSQL_HOST.stringValue).toString(),
                                             systemProperties.getProperty(SystemProperties.MYSQL_PORT.stringValue).toInt(),
-                                            systemProperties.getProperty(SystemProperties.USERS_DB.stringValue).toString(),
+                                            MarkeeUsersTables.USERS_DB.stringValue,
                                             systemProperties.getProperty(SystemProperties.MYSQL_USER.stringValue).toString(),
                                             systemProperties.getProperty(SystemProperties.MYSQL_PWD.stringValue).toString()).getDatasource()
 
