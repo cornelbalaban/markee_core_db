@@ -1,3 +1,4 @@
+import models.ProjectsKeys
 import models.User
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.insert
@@ -27,6 +28,19 @@ class DbTests {
             } get User.userId
 
             assert(cityId != 0)
+        }
+    }
+
+    @Test
+    fun testInsertProjectKey () {
+        transaction ( markeeUsersDb ) {
+
+            val createdProjectId = ProjectsKeys.insert {
+                it[projectId] = 23
+                it[projectAccessKey] = "coredbtest"
+            } get ProjectsKeys.projectId
+
+            assert(createdProjectId > 0)
         }
     }
 }
