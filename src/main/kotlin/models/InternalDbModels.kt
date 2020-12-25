@@ -51,6 +51,11 @@ internal object Project: Table(MarkeeUsersTables.PROJECTS_TABLE.stringValue) {
 
 internal object Tokens: Table(MarkeeUsersTables.TOKENS_TABLE.stringValue) {
 
+    val token: Column<String> = varchar("",250)
+    val expirationTtl: Column<Int> = integer("expiration_ttl_tkn")
+    val generationDate: Column<Long> = long("generation_date_tkn")
+    val userId: Column<Int> = integer("user_id_tkn")
+
 }
 
 internal object UsersToCompaniesMapping: Table(MarkeeUsersTables.USERS_TO_COMPANIES_TABLE.stringValue) {
@@ -58,6 +63,10 @@ internal object UsersToCompaniesMapping: Table(MarkeeUsersTables.USERS_TO_COMPAN
 }
 
 internal object UsersToProjectsMapping: Table(MarkeeUsersTables.USERS_TO_PROJECTS_TABLE.stringValue) {
+
+    val userId: Column<Long> = long("id_usr_u2p")
+    val projectId: Column<Long> = long("id_proj_u2p")
+    val role: Column<String> = text("role_usr")
 
 }
 

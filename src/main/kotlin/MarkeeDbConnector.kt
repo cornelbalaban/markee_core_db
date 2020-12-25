@@ -1,4 +1,8 @@
+import models.User
+import models.UserModel
 import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 
 private const val IS_DEBUG = true
@@ -7,7 +11,7 @@ private const val IS_DEBUG = true
  * singleton containing references to database connections
  * using Hikari datasource for the MariaDB connection pool
  */
-object MarkeeDbConnector {
+class MarkeeDbConnector {
 
     private val systemProperties = Properties()
     private var usersDatabase : Database
@@ -24,8 +28,33 @@ object MarkeeDbConnector {
 
         usersDatabase = Database.connect(usersDatasource)
     }
-
+    
     fun usersDbConnection(): Database = usersDatabase
 
+    fun insertUser(user: UserModel): Int? {
+             
+        var userId: Int? = null
+        
+        if (user.isValid()) {
+           userId = transaction(usersDatabase) {
+               User.insert {
+                   it[emailUsr] = user.email
+                   it[passwordHash] = user.passwordHash as String
+                   it[passwordSalt] = user.passwordSalt as String
+                   it[userName] = user.userName as String
+               } get User.userId
+           }            
+        } 
+        
+        return userId
+    }
+
+    fun getUser(withEmail: String, andPassword: String?) {
+
+    }
+
+
+
+    
 
 }
