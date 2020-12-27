@@ -1,7 +1,6 @@
 import models.User
 import models.UserModel
-import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 
@@ -49,12 +48,19 @@ class MarkeeDbConnector {
         return userId
     }
 
-    fun getUser(withEmail: String, andPassword: String?) {
-
+    fun getUser(withEmail: String, andPassword: String): Int {
+        
+        return  transaction (usersDatabase) {
+            User.select {
+                (User.emailUsr eq withEmail) and (User.passwordHash eq andPassword)
+            }.first()[User.userId]
+        }
     }
 
-
-
-    
+    fun deleteUser(userId: Int): Int {
+       return  transaction(usersDatabase) { 
+           User.deleteWhere { User.userId eq userId } 
+       }
+    }   
 
 }
