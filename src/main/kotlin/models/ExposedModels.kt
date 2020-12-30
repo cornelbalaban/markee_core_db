@@ -1,5 +1,8 @@
 package models
 
+import models.CompanyCustomer.autoIncrement
+import org.jetbrains.exposed.sql.Column
+
 enum class ProjectType (val stringValue: String) {
     FREE("free"),
     PRO("pro")
@@ -16,3 +19,12 @@ data class UserModel(
         return userName != null && passwordHash != null && passwordSalt != null
     }
 }
+
+data class CompanyModel(
+        var customerId: Int? = null,
+        val customerName: String,
+        var customerCountry: String? = null,
+        var customerCity: String? = null,
+        var customerAddress: String? = null,
+        var customerAdmin: Int? = null
+)

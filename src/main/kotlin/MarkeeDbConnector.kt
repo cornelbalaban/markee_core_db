@@ -1,3 +1,4 @@
+import dao.CompanyRepository
 import models.User
 import models.UserModel
 import org.jetbrains.exposed.sql.*
@@ -14,6 +15,7 @@ class MarkeeDbConnector {
 
     private val systemProperties = Properties()
     private var usersDatabase : Database
+    private lateinit var companyRepository: CompanyRepository
 
     init {
 
@@ -30,6 +32,7 @@ class MarkeeDbConnector {
     
     fun usersDbConnection(): Database = usersDatabase
 
+    //TODO users -- move to separate class
     fun insertUser(user: UserModel): Int? {
              
         var userId: Int? = null
@@ -61,6 +64,9 @@ class MarkeeDbConnector {
        return  transaction(usersDatabase) { 
            User.deleteWhere { User.userId eq userId } 
        }
-    }   
+    }
+
+    //TODO companies -- TODO move to separate class
+    
 
 }

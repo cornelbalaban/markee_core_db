@@ -22,32 +22,43 @@ class DbTests {
 
     @Test
     fun testDbInsertUser() {
+        println("---------------Inserting user -------------")
         insertedUserId = markeeUsersDb.insertUser(
             UserModel(null, userName, userName, pwdSalt,hashedPwd)
         )
 
        assert(insertedUserId != null)
+       println("---------------Inserted user: $insertedUserId -------------")
     }
 
 
     @Test
-    fun getUser() {
+    fun testGetUser() {
+        println("---------------Retrieving user $insertedUserId -------------")
         var userId = markeeUsersDb.getUser(userName, hashedPwd)
 
-        assert(userId != 0)
+        assert(userId == insertedUserId)
+        println("---------------Retrieval complete -------------")
     }
 
     @Test
     fun testDeleteUser() {
-        var deletedUserId = markeeUsersDb.deleteUser(159)
+        println("---------------Deleting user: $insertedUserId -------------")
+        var deletedUserId = markeeUsersDb.deleteUser(insertedUserId as Int)
 
         assert(deletedUserId > 0)
+        println("---------------Deletion complete -------------")
     }
 
     @Test
     fun crudUser(){
-        
-        
+        println("---------------Starting CRUD Tests-------------")
+
+        testDbInsertUser()
+        testGetUser()
+        testDeleteUser()
+
+        println("---------------Ending CRUD Tests-------------")
     }
     
     @Test
