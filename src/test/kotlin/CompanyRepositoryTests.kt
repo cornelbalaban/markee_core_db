@@ -25,6 +25,12 @@ class CompanyRepositoryTests {
     @Test
     fun testCreateCompany() {
 
+        println("--------------- TEST: Creating company -------------")
+        var companyModel = CompanyModel("coreDbTest", 43)
+        companyRepository?.create(companyModel)
+        println("--------------- TEST: Company created: ${companyModel.customerName} | ${companyModel.customerId} -------------")
+
+        assert(companyModel.customerId != null)
     }
 
     @Test
