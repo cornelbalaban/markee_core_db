@@ -1,6 +1,5 @@
 import dao.CompanyRepository
 import models.CompanyModel
-import org.jetbrains.exposed.sql.Database
 import org.junit.After
 import org.junit.Before
 import org.junit.Test

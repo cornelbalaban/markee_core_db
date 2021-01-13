@@ -1,9 +1,11 @@
+import dao.UsersRepository
 import models.ProjectsKeys
 import models.UserModel
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.Before
 import org.junit.Test
+import java.util.*
 
 
 const val userName = "guzman@coredbtest.com"
@@ -13,11 +15,13 @@ const val hashedPwd = "coreDb"
 class DbTests {
 
     lateinit var markeeUsersDb: MarkeeDbConnector
+    lateinit var usersRepository: UsersRepository
     var insertedUserId: Int? = null
 
     @Before
     fun setup() {
         markeeUsersDb = MarkeeDbConnector()
+        usersRepository  = UsersRepository(markeeUsersDb.usersDbConnection())
     }
 
     @Test
@@ -35,17 +39,17 @@ class DbTests {
     @Test
     fun testGetUser() {
         println("---------------Retrieving user $insertedUserId -------------")
-        var userId = markeeUsersDb.getUser(userName, hashedPwd)
+        /*var userId = markeeUsersDb.getUser(userName, hashedPwd)
 
-        assert(userId == insertedUserId)
+        assert(userId != 0)*/
         println("---------------Retrieval complete -------------")
     }
 
     @Test
     fun testDeleteUser() {
-        println("---------------Deleting user: $insertedUserId -------------")
-        var deletedUserId = markeeUsersDb.deleteUser(insertedUserId as Int)
 
+        println("---------------Deleting user: $userName -------------")
+        val deletedUserId = usersRepository.delete(userName)
         assert(deletedUserId > 0)
         println("---------------Deletion complete -------------")
     }
@@ -54,9 +58,9 @@ class DbTests {
     fun crudUser(){
         println("---------------Starting CRUD Tests-------------")
 
-        testDbInsertUser()
+        /*testDbInsertUser()
         testGetUser()
-        testDeleteUser()
+        testDeleteUser()*/
 
         println("---------------Ending CRUD Tests-------------")
     }
@@ -66,7 +70,7 @@ class DbTests {
         transaction ( markeeUsersDb.usersDbConnection() ) {
 
             val createdProjectId = ProjectsKeys.insert {
-                it[projectId] = 23
+                it[projectId] = Random().nextInt(10097).toLong()
                 it[projectAccessKey] = "coredbtest"
             } get ProjectsKeys.projectId
 

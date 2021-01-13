@@ -5,10 +5,11 @@ import models.Project
 import models.ProjectModel
 import models.User
 import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.transactions.transaction
 
-class ProjectsRepository(val database: Database): DbOperationsInterface<ProjectModel, Int> {
+class ProjectsRepository(val database: Database): DbOperationsInterface<ProjectModel, Long> {
 
     override fun create(projectDetails: ProjectModel): ProjectModel {
 
@@ -31,7 +32,9 @@ class ProjectsRepository(val database: Database): DbOperationsInterface<ProjectM
         TODO("Not yet implemented")
     }
 
-    override fun delete(forObject: Int) {
-        TODO("Not yet implemented")
+    override fun delete(projectId: Long) {
+        transaction (database) {
+            Project.deleteWhere { Project.projectId eq projectId}
+        }
     }
 }

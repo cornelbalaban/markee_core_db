@@ -66,11 +66,12 @@ class CompanyRepository(val database: Database) : DbOperationsInterface<CompanyM
 
         transaction(database) {
             CompanyCustomer
-                    .slice(CompanyCustomer.customerId, CompanyCustomer.customerName)
+                    .slice(CompanyCustomer.customerId, CompanyCustomer.customerName, CompanyCustomer.customerAdmin)
                     .select({ CompanyCustomer.customerId eq companyId })
                     .forEach {
                         exposedCompanyModel = CompanyModel(
                                 it[CompanyCustomer.customerName],
+                                it[CompanyCustomer.customerAdmin],
                                 it[CompanyCustomer.customerId]
                         )
                     }

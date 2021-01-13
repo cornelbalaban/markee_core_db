@@ -1,15 +1,20 @@
 plugins {
     id 'java'
     id 'org.jetbrains.kotlin.jvm' version '1.4.21'
+    id 'com.jfrog.artifactory' version '4.15.1'
+    id 'maven-publish'
 }
-
-group 'com.markee'
-version '1.0-SNAPSHOT'
+ext {
+    group 'com.markee'
+    version '1.0'
+}
 
 repositories {
     mavenCentral()
     jcenter()
 }
+
+
 
 dependencies {
 
@@ -37,3 +42,71 @@ compileKotlin {
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
+
+String packageGroup = "com.markee"
+String packageName = "coredb"
+String packageVersion = version
+String artifactoryRepository = "coreDb"
+String artifactoryUser = "admin"
+String artifactoryPwd = "password"
+
+/*jar {
+    from configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+}*/
+
+
+artifactory {
+    publish {
+
+        contextUrl = 'http://86.124.71.22:8081/artifactory'
+
+        repository {
+            repoKey = artifactoryRepository
+            username = artifactoryUser
+            password = artifactoryPwd
+            maven = true
+        }
+
+        defaults {
+            publications('jarPublish')
+            publishArtifacts = true
+            publishPom = true
+        }
+    }
+}
+
+publishing {
+    publications {
+        jarPublish(MavenPublication) {
+            groupId packageGroup
+            artifactId packageName
+            version = packageVersion
+
+            // Usually "from components.java" method call is used in this
+            // place which adds compiled files or dependencies to the published
+            // library. This is problematic for multi-project builds since
+            // dependency to a submodule is not correcly processed by the
+            // publication plugin. To avoid this we will use result of jar
+            // task (Fat Jar file) as a single artifact that will be published.
+            // See documentation for more details: https://docs.gradle.org/current/dsl/org.gradle.api.publish.maven.MavenPublication.html#org.gradle.api.publish.maven.MavenPublication:artifact(java.lang.Object)
+            //artifacts = [ jar ]
+            artifact ("$buildDir/libs/coredb-${version}.jar")
+
+            pom.withXml {
+                def dependencies = asNode().appendNode('dependencies')
+                configurations.getByName("compileClasspath").getResolvedConfiguration()
+                        .getFirstLevelModuleDependencies().each {
+                    def dependency = dependencies.appendNode('dependency')
+                    dependency.appendNode('groupId', it.moduleGroup)
+                    dependency.appendNode('artifactId', it.moduleName)
+                    dependency.appendNode('version', it.moduleVersion)
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
