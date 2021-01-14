@@ -1,4 +1,4 @@
-package dao
+package repositories
 
 import DbOperationsInterface
 import models.CompanyCustomer
@@ -27,12 +27,13 @@ class CompanyRepository(val database: Database) : DbOperationsInterface<CompanyM
         return companyDetails
     }
 
-    override fun update(forObject: CompanyModel) {
+    override fun update(company: CompanyModel): CompanyModel {
         //TODO  implement if needed later on
+        return company
     }
 
-    override fun delete(companyId: Int) {
-        transaction(database) {
+    override fun delete(companyId: Int): Int {
+        return transaction(database) {
             CompanyCustomer.deleteWhere { CompanyCustomer.customerId eq companyId }
         }
     }

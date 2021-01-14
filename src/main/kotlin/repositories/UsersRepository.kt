@@ -1,11 +1,9 @@
-package dao
+package repositories
 
 import DbOperationsInterface
 import models.User
 import models.UserModel
-import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.deleteWhere
-import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class UsersRepository(val database: Database) : DbOperationsInterface<UserModel, Int> {
@@ -29,12 +27,23 @@ class UsersRepository(val database: Database) : DbOperationsInterface<UserModel,
         return user
     }
 
-    override fun update(forObject: UserModel) {
-        //tODO
+    override fun update(user: UserModel): UserModel {
+        return user
     }
 
-    override fun delete(forObject: Int) {
+    override fun delete(userId: Int): Int {
+        return  transaction(database) {
+            User.deleteWhere { User.userId eq userId }
+        }
+    }
 
+    fun getUser(withEmail: String, andPassword: String): Int {
+
+        return  transaction (database) {
+            User.select {
+                (User.emailUsr eq withEmail) and (User.passwordHash eq andPassword)
+            }.first()[User.userId]
+        }
     }
 
     fun delete(byEmail: String): Int = transaction(database) {

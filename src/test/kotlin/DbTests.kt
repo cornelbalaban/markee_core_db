@@ -1,4 +1,4 @@
-import dao.UsersRepository
+import repositories.UsersRepository
 import models.ProjectsKeys
 import models.UserModel
 import org.jetbrains.exposed.sql.insert
@@ -27,11 +27,11 @@ class DbTests {
     @Test
     fun testDbInsertUser() {
         println("---------------Inserting user -------------")
-        insertedUserId = markeeUsersDb.insertUser(
+       var createdUser = usersRepository.create(
             UserModel(null, userName, userName, pwdSalt,hashedPwd)
         )
 
-       assert(insertedUserId != null)
+       assert(createdUser.userId != null)
        println("---------------Inserted user: $insertedUserId -------------")
     }
 
@@ -39,9 +39,9 @@ class DbTests {
     @Test
     fun testGetUser() {
         println("---------------Retrieving user $insertedUserId -------------")
-        /*var userId = markeeUsersDb.getUser(userName, hashedPwd)
+        var userId = usersRepository.getUser(userName, hashedPwd)
 
-        assert(userId != 0)*/
+        assert(userId != 0)
         println("---------------Retrieval complete -------------")
     }
 

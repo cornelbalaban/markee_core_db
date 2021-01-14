@@ -1,4 +1,4 @@
-import dao.CompanyRepository
+import repositories.CompanyRepository
 import models.CompanyModel
 import org.junit.After
 import org.junit.Before

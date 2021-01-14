@@ -1,9 +1,8 @@
-package dao
+package repositories
 
 import DbOperationsInterface
 import models.Project
 import models.ProjectModel
-import models.User
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
@@ -28,13 +27,13 @@ class ProjectsRepository(val database: Database): DbOperationsInterface<ProjectM
 
     }
 
-    override fun update(forObject: ProjectModel) {
+    override fun update(forObject: ProjectModel): ProjectModel {
         TODO("Not yet implemented")
     }
 
-    override fun delete(projectId: Long) {
-        transaction (database) {
+    override fun delete(projectId: Long) : Long {
+        return (transaction (database) {
             Project.deleteWhere { Project.projectId eq projectId}
-        }
+        }).toLong()
     }
 }
