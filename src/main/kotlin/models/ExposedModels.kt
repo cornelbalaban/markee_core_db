@@ -1,11 +1,8 @@
 package models
 
-import models.CompanyCustomer.autoIncrement
-import org.jetbrains.exposed.sql.Column
-
 enum class ProjectType(val stringValue: String) {
-    FREE("free"),
-    PRO("pro")
+    free("free"),
+    pro("pro")
 }
 
 data class UserModel(
@@ -37,3 +34,39 @@ data class ProjectModel(
         var projectName: String = "Default Project",
         var projectId: Long? = null
 )
+
+
+class DaoResponse<T>(
+        var responseCode: DaoResponseCode,
+        var responseMessage: DaoResponseMessage,
+        var responseResource: T?
+)
+
+enum class DaoResponseCode {
+
+    USER_ALREADY_EXISTS,
+    USER_CREATED,
+    PROJECT_CREATED,
+    CUSTOMER_CREATED,
+    CUSTOMER_UDPATED,
+    USER_UPDATED,
+    USER_DELETED,
+    PROJECT_DELETED,
+    PROJECT_UPDATED,
+    CUSTOMER_DELETED
+
+}
+
+enum class DaoResponseMessage(var stringValue: String) {
+
+    USER_ALREADY_EXISTS("user already exists"),
+    USER_CREATED("user created"),
+    PROJECT_CREATED("project created"),
+    CUSTOMER_CREATED("customer created"),
+    CUSTOMER_UDPATED("customer updated"),
+    USER_UPDATED("user updated"),
+    USER_DELETED("user deleted"),
+    PROJECT_DELETED("project deleted"),
+    PROJECT_UPDATED("project updated"),
+    CUSTOMER_DELETED("customer deleted")
+}

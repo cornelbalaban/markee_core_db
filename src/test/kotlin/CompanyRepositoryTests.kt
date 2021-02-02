@@ -25,7 +25,7 @@ class CompanyRepositoryTests {
     fun testCreateCompany() {
 
         println("--------------- TEST: Creating company -------------")
-        var companyModel = CompanyModel("coreDbTest", 43)
+        val companyModel = CompanyModel("coreDbTest", 43)
         companyRepository?.create(companyModel)
         println("--------------- TEST: Company created: ${companyModel.customerName} | ${companyModel.customerId} -------------")
 

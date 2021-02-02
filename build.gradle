@@ -4,22 +4,23 @@ plugins {
     id 'com.jfrog.artifactory' version '4.15.1'
     id 'maven-publish'
 }
+
 ext {
     group 'com.markee'
-    version '1.0'
+    version '1.0.3'
 }
+
 
 repositories {
     mavenCentral()
     jcenter()
 }
 
-
-
 dependencies {
 
     def mysqlConnectionVersion = '5.1.6'
     def kotlin_exposed_version = '0.28.1'
+
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     compile "mysql:mysql-connector-java:8.0.19"
@@ -33,6 +34,7 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile "mysql:mysql-connector-java:8.0.19"
     testImplementation "org.mockito:mockito-core:1.+"
+
     testCompile "com.zaxxer:HikariCP:3.4.5"
 }
 
