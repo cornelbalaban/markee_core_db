@@ -38,9 +38,9 @@ internal object ProjectsKeys: Table(MarkeeUsersTables.PROJECT_KEYS_TABLE.stringV
 
 internal object Project: Table(MarkeeUsersTables.PROJECTS_TABLE.stringValue) {
 
-    val projectId: Column<Long> = long("id_proj")
+    var projectId: Column<Int> = integer("id_proj").autoIncrement()
     val projectName: Column<String> = varchar("name_proj", 250)
-    val projectType: Column<ProjectType> = enumeration("type_proj", ProjectType::class)
+    val projectType: Column<ProjectType> = enumerationByName("type_proj",20, ProjectType::class)
     val projectOwner: Column<Int> = integer("owner_proj")
     val projectToken: Column<String> = varchar("project_token_proj", 250)
     val projectParentCompany: Column<Int> = integer("parent_company_proj")

@@ -1,4 +1,8 @@
+import models.Project
+import models.ProjectModel
+import models.ProjectType
 import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -27,6 +31,16 @@ class ProjectsRepositoryTests {
         markeeDbConnector = null
         markeeUsersTables = null
         projectsRepository = null
+    }
+
+
+    @Test
+    fun testCreateProject() {
+
+        val project = ProjectModel(10001, 10002, ProjectType.free)
+        projectsRepository?.create(project)
+        println("Project id --> ${project.projectId}")
+        assert(project.projectId != null)
     }
 
     @Test

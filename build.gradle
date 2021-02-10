@@ -7,7 +7,7 @@ plugins {
 
 ext {
     group 'com.markee'
-    version '1.0.3'
+    version '1.0.5'
 }
 
 
@@ -20,12 +20,13 @@ dependencies {
 
     def mysqlConnectionVersion = '5.1.6'
     def kotlin_exposed_version = '0.28.1'
+    def hikariConnectionPooling = '4.0.1'
 
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     compile "mysql:mysql-connector-java:8.0.19"
     //compile "org.mariadb.jdbc:mariadb-java-client:2.1.2"
-    compile "com.zaxxer:HikariCP:3.4.5"
+    compile "com.zaxxer:HikariCP:$hikariConnectionPooling"
     compile "org.jetbrains.kotlin:kotlin-reflect:1.4.21"
     compile "org.jetbrains.exposed:exposed-core:$kotlin_exposed_version"
     compile "org.jetbrains.exposed:exposed-dao:$kotlin_exposed_version"

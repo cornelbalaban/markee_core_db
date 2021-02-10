@@ -32,14 +32,14 @@ data class ProjectModel(
         val ownerId: Int,
         var type: ProjectType,
         var projectName: String = "Default Project",
-        var projectId: Long? = null
+        var projectId: Int? = null
 )
 
 
 class DaoResponse<T>(
         var responseCode: DaoResponseCode,
         var responseMessage: DaoResponseMessage,
-        var responseResource: T?
+        var responseResource: T
 )
 
 enum class DaoResponseCode {

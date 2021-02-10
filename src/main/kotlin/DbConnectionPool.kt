@@ -35,11 +35,11 @@ internal class DbConnectionPool(dbHost: String,
             driverClassName = "com.mysql.cj.jdbc.Driver"
             username = dbUser
             password = dbPass
-            connectionTimeout = 20000
+            connectionTimeout = 10000
             //addDataSourceProperty(STATEMENTS_CACHE, "true")
             //addDataSourceProperty(STATEMENTS_CACHE_SIZE, "250")
             //addDataSourceProperty(STATEMENTS_CACHE_SQL_LIMIT, "2048")
-            maximumPoolSize = 10 //this is actually the default
+            maximumPoolSize = 20
 
         }
 

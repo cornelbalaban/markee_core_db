@@ -3,16 +3,19 @@ package repositories
 import DbOperationsInterface
 import models.*
 import models.Project
+import models.Project.projectId
 import models.Project.projectName
 import models.Project.projectOwner
 import models.Project.projectParentCompany
 import models.Project.projectType
-import models.UsersToProjectsMapping
-import models.UsersToProjectsMapping.projectId
-import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.deleteWhere
+import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 
-class ProjectsRepository(private val database: Database) : DbOperationsInterface<ProjectModel, Long, DaoResponse<ProjectModel>> {
+
+class ProjectsRepository(private val database: Database) : DbOperationsInterface<ProjectModel, Int, DaoResponse<ProjectModel>> {
 
     override fun create(projectDetails: ProjectModel): DaoResponse<ProjectModel> {
 
@@ -22,7 +25,7 @@ class ProjectsRepository(private val database: Database) : DbOperationsInterface
                 it[projectOwner] = projectDetails.ownerId
                 it[projectParentCompany] = projectDetails.companyId
                 it[projectType] = projectDetails.type
-            } get Project.projectId
+            } get projectId
 
             projectDetails.projectId = createdProjectId
         }
@@ -36,13 +39,13 @@ class ProjectsRepository(private val database: Database) : DbOperationsInterface
         return DaoResponse(DaoResponseCode.PROJECT_UPDATED, DaoResponseMessage.PROJECT_UPDATED, forObject)
     }
 
-    override fun delete(projectId: Long): Long {
+    override fun delete(projectId: Int): Int {
         return (transaction(database) {
             Project.deleteWhere { Project.projectId eq projectId }
-        }).toLong()
+        })
     }
 
-    fun getProject(forProjectId: List<Long>): List<ProjectModel> {
+    fun getProject(forProjectId: List<Int>): List<ProjectModel> {
 
         val argSize = forProjectId.size
         val selectedProjects : MutableList<ProjectModel> = mutableListOf()
@@ -98,7 +101,7 @@ class ProjectsRepository(private val database: Database) : DbOperationsInterface
 
         val projectsForUser: MutableList<ProjectModel> = mutableListOf()
 
-
+/*
         transaction(database) {
 
             val projectIdstoUser: MutableList<Long> = mutableListOf()
@@ -111,7 +114,7 @@ class ProjectsRepository(private val database: Database) : DbOperationsInterface
 
                 projectsForUser.addAll(getProject(projectIdstoUser))
             }
-        }
+        }*/
 
         return projectsForUser
     }
