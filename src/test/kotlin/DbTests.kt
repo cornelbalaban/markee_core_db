@@ -21,8 +21,11 @@ class DbTests {
 
     @Before
     fun setup() {
+
+        println("---------------Setting up -------------")
         markeeUsersDb = MarkeeDbConnector()
         usersRepository  = UsersRepository(markeeUsersDb.usersDbConnection())
+        println("---------------Setting up - COMPLETE -------------")
     }
 
     @Test
@@ -70,6 +73,15 @@ class DbTests {
         testDeleteUser()*/
 
         println("---------------Ending CRUD Tests-------------")
+    }
+
+    @Test
+    fun getUserSalt() {
+        val user = "ciocoiuo1@gmail.com"
+        val userPwdSalt = usersRepository.getPwdSaltByUserName(user)
+        println("User Salt : $userPwdSalt")
+
+        assert(!userPwdSalt.isNullOrEmpty())
     }
     
     @Test

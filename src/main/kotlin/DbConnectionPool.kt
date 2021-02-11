@@ -32,7 +32,7 @@ internal class DbConnectionPool(dbHost: String,
             //driverClassName = "org.mariadb.jdbc.Driver"
             //jdbcUrl = "jdbc:mariadb://$dbHost:$dbPort/$dbName"
             jdbcUrl = "jdbc:mysql://$dbHost:$dbPort/$dbName"
-            driverClassName = "com.mysql.cj.jdbc.Driver"
+            driverClassName = "com.mysql.jdbc.Driver"
             username = dbUser
             password = dbPass
             connectionTimeout = 10000
