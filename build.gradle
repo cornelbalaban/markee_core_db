@@ -14,6 +14,7 @@ ext {
 repositories {
     mavenCentral()
     jcenter()
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -78,7 +79,7 @@ artifactory {
     }
 }
 
-publishing {
+/*publishing {
     publications {
         jarPublish(MavenPublication) {
             groupId packageGroup
@@ -107,7 +108,10 @@ publishing {
             }
         }
     }
-}
+}*/
+
+apply plugin: 'maven'
+group = 'com.github.cornelbalaban'
 
 
 
