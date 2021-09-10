@@ -21,9 +21,12 @@ class DbTests {
 
     @Before
     fun setup() {
-
+        val connectionData = ConnectionData("18.170.44.206",3306,
+            "markee_users","cornek", "testare_07")
         println("---------------Setting up -------------")
         markeeUsersDb = MarkeeDbConnector()
+        markeeUsersDb.initialize(connectionData)
+
         usersRepository  = UsersRepository(markeeUsersDb.usersDbConnection())
         println("---------------Setting up - COMPLETE -------------")
     }
