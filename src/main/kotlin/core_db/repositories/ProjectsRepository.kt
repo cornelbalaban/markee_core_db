@@ -1,13 +1,16 @@
-package repositories
+package core_db.repositories
 
-import DbOperationsInterface
-import models.*
-import models.Project
-import models.Project.projectId
-import models.Project.projectName
-import models.Project.projectOwner
-import models.Project.projectParentCompany
-import models.Project.projectType
+import core_db.interfaces.DbOperationsInterface
+import core_db.models.DaoResponse
+import core_db.models.DaoResponseCode
+import core_db.models.DaoResponseMessage
+import core_db.models.ProjectModel
+import core_db.models.Project
+import core_db.models.Project.projectId
+import core_db.models.Project.projectName
+import core_db.models.Project.projectOwner
+import core_db.models.Project.projectParentCompany
+import core_db.models.Project.projectType
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
@@ -15,7 +18,8 @@ import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 
 
-class ProjectsRepository(private val database: Database) : DbOperationsInterface<ProjectModel, Int, DaoResponse<ProjectModel>> {
+class ProjectsRepository(private val database: Database) :
+    DbOperationsInterface<ProjectModel, Int, DaoResponse<ProjectModel>> {
 
     override fun create(projectDetails: ProjectModel): DaoResponse<ProjectModel> {
 
@@ -83,11 +87,11 @@ class ProjectsRepository(private val database: Database) : DbOperationsInterface
             val projects = Project.select { Project.projectOwner eq forOwner }.forEach {
 
                 val project = ProjectModel(
-                        it[Project.projectParentCompany],
-                        it[Project.projectOwner],
-                        it[Project.projectType],
-                        it[Project.projectName],
-                        it[Project.projectId]
+                        it[projectParentCompany],
+                        it[projectOwner],
+                        it[projectType],
+                        it[projectName],
+                        it[projectId]
                 )
 
                 projectsForOwner.add(project)

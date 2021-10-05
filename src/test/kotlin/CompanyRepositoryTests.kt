@@ -1,5 +1,5 @@
-import repositories.CompanyRepository
-import models.CompanyModel
+import core_db.repositories.CompanyRepository
+import core_db.models.CompanyModel
 import org.junit.After
 import org.junit.Before
 import org.junit.Test

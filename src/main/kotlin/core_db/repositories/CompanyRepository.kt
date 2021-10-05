@@ -1,15 +1,19 @@
-package repositories
+package core_db.repositories
 
-import DbOperationsInterface
-import models.*
-import models.CompanyCustomer
+import core_db.interfaces.DbOperationsInterface
+import core_db.models.CompanyModel
+import core_db.models.DaoResponse
+import core_db.models.DaoResponseCode
+import core_db.models.DaoResponseMessage
+import core_db.models.CompanyCustomer
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction
 
-class CompanyRepository(private val database: Database) : DbOperationsInterface<CompanyModel, Int,DaoResponse<CompanyModel>> {
+class CompanyRepository(private val database: Database) :
+    DbOperationsInterface<CompanyModel, Int, DaoResponse<CompanyModel>> {
 
     private val companiesCache: Map<Int, CompanyModel> = mutableMapOf()
 

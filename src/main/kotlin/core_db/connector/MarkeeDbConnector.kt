@@ -1,9 +1,7 @@
-import org.jetbrains.exposed.sql.*
-import java.lang.Exception
-import java.sql.Connection
-import java.util.*
+package core_db.connector
 
-private const val IS_DEBUG = true
+import org.jetbrains.exposed.sql.Database
+import java.util.*
 
 /**
  * singleton containing references to database connections

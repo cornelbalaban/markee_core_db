@@ -1,4 +1,4 @@
-
+package core_db.interfaces
 
 interface DbOperationsInterface<T,K,R> {
 

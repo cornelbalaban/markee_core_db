@@ -1,7 +1,6 @@
-
+package core_db.connector
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
-import java.sql.Connection
 
 /**
  * class that provides a connection pool to any mysql, postgres database

@@ -1,7 +1,7 @@
-import models.DaoResponseCode
-import repositories.UsersRepository
-import models.ProjectsKeys
-import models.UserModel
+import core_db.models.DaoResponseCode
+import core_db.repositories.UsersRepository
+import core_db.models.ProjectsKeys
+import core_db.models.UserModel
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.Before

@@ -1,3 +1,5 @@
+package core_db.utils
+
 enum class SystemProperties(val stringValue: String) {
 
     MYSQL_HOST("mysqlDbHost"),
@@ -6,8 +8,6 @@ enum class SystemProperties(val stringValue: String) {
     MYSQL_PWD("mysqlPwd"),
     NOSQL_HOST("mongoDbHost"),
     NOSQL_PORT("mongoDbPort"),
-
-
 }
 
 enum class MarkeeUsersTables(val stringValue: String) {

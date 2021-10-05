@@ -1,8 +1,8 @@
-package models
+package core_db.models
 
-import MarkeeUsersTables
+
+import core_db.utils.MarkeeUsersTables
 import org.jetbrains.exposed.sql.Column
-import org.jetbrains.exposed.sql.ForeignKeyConstraint
 import org.jetbrains.exposed.sql.Table
 
 internal object User: Table(MarkeeUsersTables.USERS_TABLE.stringValue) {

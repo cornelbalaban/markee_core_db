@@ -1,12 +1,10 @@
-import models.Project
-import models.ProjectModel
-import models.ProjectType
+import core_db.models.ProjectModel
+import core_db.models.ProjectType
 import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import repositories.ProjectsRepository
+import core_db.repositories.ProjectsRepository
 
 class ProjectsRepositoryTests {
 

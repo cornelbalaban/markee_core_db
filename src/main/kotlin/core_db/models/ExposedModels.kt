@@ -1,4 +1,4 @@
-package models
+package core_db.models
 
 enum class ProjectType(val stringValue: String) {
     free("free"),
@@ -28,18 +28,18 @@ data class CompanyModel(
 
 
 data class ProjectModel(
-        val companyId: Int,
-        val ownerId: Int,
-        var type: ProjectType,
-        var projectName: String = "Default Project",
-        var projectId: Int? = null
+    val companyId: Int,
+    val ownerId: Int,
+    var type: ProjectType,
+    var projectName: String = "Default Project",
+    var projectId: Int? = null
 )
 
 
 class DaoResponse<T>(
-        var responseCode: DaoResponseCode,
-        var responseMessage: DaoResponseMessage,
-        var responseResource: T
+    var responseCode: DaoResponseCode,
+    var responseMessage: DaoResponseMessage,
+    var responseResource: T
 )
 
 enum class DaoResponseCode {
