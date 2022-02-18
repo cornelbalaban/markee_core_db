@@ -1,10 +1,8 @@
 package core_db.repositories
 
 import core_db.interfaces.DbOperationsInterface
-import core_db.models.DaoResponse
-import core_db.models.DaoResponseCode
-import core_db.models.DaoResponseMessage
-import core_db.models.UserModel
+import core_db.models.*
+import core_db.models.Tokens
 import core_db.models.User
 import core_db.models.User.emailUsr
 import core_db.models.User.passwordSalt
@@ -16,7 +14,6 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 
 class UsersRepository(private val database: Database) : DbOperationsInterface<UserModel, Int, DaoResponse<UserModel>> {
-
 
     override fun create(user: UserModel): DaoResponse<UserModel> {
 
