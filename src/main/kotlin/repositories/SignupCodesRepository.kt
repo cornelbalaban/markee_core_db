@@ -4,6 +4,7 @@ import DbOperationsInterface
 import models.*
 import models.CodeModel
 import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.transactions.transaction
 import utils.EncryptionUtils
@@ -50,12 +51,16 @@ class SignupCodesRepository (private val database: Database, private val encrypt
     }
 
     //this methid is not needed
-    override fun update(forUrl: String): DaoResponse<SignupCodeModel> {
+    override fun update(code: String): DaoResponse<SignupCodeModel> {
         return  DaoResponse(DaoResponseCode.METHOD_UNAVAILABLE, DaoResponseMessage.METHOD_UNAVAILABLE, SignupCodeModel())
     }
 
-    override fun delete(url: String): String {
-        return ""
+    override fun delete(code: String): String {
+        return transaction {
+            CodeModel.deleteWhere {
+                CodeModel.signupCode eq code
+            }
+        }.toString()
     }
 
     /**

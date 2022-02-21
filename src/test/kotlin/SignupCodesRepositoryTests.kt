@@ -32,4 +32,18 @@ class SignupCodesRepositoryTests {
         val user = "someTestUser"
         assert(signupCodesRepository.create(user).responseCode == DaoResponseCode.SIGNUP_CODE_CREATE_FAILED)
     }
+
+    @Test
+    fun testDeleteCode() {
+        var user = "12"
+        val createdCodeResponse = signupCodesRepository.create(user)
+        val createdCode = createdCodeResponse.responseResource.code
+        println(createdCode)
+
+        createdCode?.let {
+            val response = signupCodesRepository.delete(it)
+            println(response)
+            assert(!response.isNullOrEmpty())
+        }
+    }
 }
