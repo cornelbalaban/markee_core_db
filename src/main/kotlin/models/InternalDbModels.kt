@@ -70,3 +70,8 @@ internal object UsersToProjectsMapping: Table(MarkeeUsersTables.USERS_TO_PROJECT
 
 }
 
+internal object CodeModel: Table(MarkeeUsersTables.SIGNUP_CODES.stringValue) {
+    val signupCode: Column<String> = varchar("code_cod",250)
+    val creationTime: Column<Long> = long("time_created_cod")
+    val userId: Column<Long> = long("user_cod")
+}

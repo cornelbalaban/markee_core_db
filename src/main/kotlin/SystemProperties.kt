@@ -19,5 +19,6 @@ enum class MarkeeUsersTables(val stringValue: String) {
     PROJECTS_TABLE("projects_proj"),
     TOKENS_TABLE("tokens_tkn"),
     USERS_TO_COMPANIES_TABLE("users_to_companies_uc"),
-    USERS_TO_PROJECTS_TABLE("users_to_projects_u2p")
+    USERS_TO_PROJECTS_TABLE("users_to_projects_u2p"),
+    SIGNUP_CODES("signup_codes_cod")
 }

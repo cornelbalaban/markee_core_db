@@ -35,6 +35,10 @@ data class ProjectModel(
         var projectId: Int? = null
 )
 
+data class SignupCodeModel(
+    var code: String? = null,
+    var userId: String? = null
+)
 
 class DaoResponse<T>(
         var responseCode: DaoResponseCode,
@@ -53,7 +57,11 @@ enum class DaoResponseCode {
     USER_DELETED,
     PROJECT_DELETED,
     PROJECT_UPDATED,
-    CUSTOMER_DELETED
+    CUSTOMER_DELETED,
+    SIGNUP_CODE_CREATED,
+    SIGNUP_CODE_DELETED,
+    SIGNUP_CODE_CREATE_FAILED,
+    METHOD_UNAVAILABLE
 
 }
 
@@ -68,5 +76,9 @@ enum class DaoResponseMessage(var stringValue: String) {
     USER_DELETED("user deleted"),
     PROJECT_DELETED("project deleted"),
     PROJECT_UPDATED("project updated"),
-    CUSTOMER_DELETED("customer deleted")
+    CUSTOMER_DELETED("customer deleted"),
+    SIGNUP_CODE_CREATED("signup code created"),
+    SIGNUP_CODE_DELETED("signup code deleted"),
+    SIGNUP_CODE_CREATE_FAILED("signup code creation failed"),
+    METHOD_UNAVAILABLE("method unavailable")
 }
