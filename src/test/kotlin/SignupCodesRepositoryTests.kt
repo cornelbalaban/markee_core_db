@@ -35,7 +35,7 @@ class SignupCodesRepositoryTests {
 
     @Test
     fun testDeleteCode() {
-        var user = "12"
+        val user = "12"
         val createdCodeResponse = signupCodesRepository.create(user)
         val createdCode = createdCodeResponse.responseResource.code
         println(createdCode)
@@ -45,5 +45,16 @@ class SignupCodesRepositoryTests {
             println(response)
             assert(!response.isNullOrEmpty())
         }
+    }
+
+    @Test
+    fun testCodeExistsTrue() {
+        val user = "12"
+        val createdCodeResponse = signupCodesRepository.create(user)
+        val createdCode = createdCodeResponse.responseResource.code
+        println("Generated code: $createdCode")
+
+        assert(signupCodesRepository.codeExists(createdCode.toString()) == true)
+
     }
 }

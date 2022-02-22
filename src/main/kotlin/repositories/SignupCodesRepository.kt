@@ -3,9 +3,7 @@ package repositories
 import DbOperationsInterface
 import models.*
 import models.CodeModel
-import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.deleteWhere
-import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import utils.EncryptionUtils
 
@@ -56,12 +54,34 @@ class SignupCodesRepository (private val database: Database, private val encrypt
     }
 
     override fun delete(code: String): String {
-        return transaction {
+        return transaction(database) {
             CodeModel.deleteWhere {
                 CodeModel.signupCode eq code
             }
         }.toString()
     }
+
+    fun codeExists(code: String) : Boolean {
+
+        var result = false
+
+        transaction(database) {
+
+            val selectCondition = Op.build { CodeModel.signupCode eq code and (CodeModel.creationTime less System.currentTimeMillis())}
+            val code = CodeModel
+                .slice(CodeModel.signupCode)
+                .select{ selectCondition}
+                .count()
+            println("$code")
+
+            if (code > 0) {
+               result = true
+            }
+        }
+
+        return result
+    }
+
 
     /**
      * creates a one time code based on the userId and the currentTimeStamp
