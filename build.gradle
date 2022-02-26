@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'org.jetbrains.kotlin.jvm' version '1.4.21'
-    id 'com.jfrog.artifactory' version '4.15.1'
+    id 'com.jfrog.artifactory' version '4.27.1'
     id 'maven-publish'
 }
 
@@ -65,16 +65,13 @@ jar {
 
 artifactory {
     publish {
-
         contextUrl = 'https://markee.jfrog.io/artifactory/'
-
         repository {
             repoKey = artifactoryRepository
             username = artifactoryUser
             password = artifactoryPwd
             maven = true
         }
-
         defaults {
             publications('jarPublish')
             publishArtifacts = true
@@ -98,7 +95,7 @@ publishing {
             // task (Fat Jar file) as a single artifact that will be published.
             // See documentation for more details: https://docs.gradle.org/current/dsl/org.gradle.api.publish.maven.MavenPublication.html#org.gradle.api.publish.maven.MavenPublication:artifact(java.lang.Object)
             //artifacts = [ jar ]
-            artifact ("$buildDir/libs/core_db-${version}.jar")
+            artifact ("$buildDir/libs/markee_core_db-${version}.jar")
 
             pom.withXml {
                 def dependencies = asNode().appendNode('dependencies')
@@ -119,7 +116,7 @@ task publishBuild(type: Exec) {
     commandLine("./gradlew artifactoryPublish")
 }
 
-apply plugin: 'maven'
+apply plugin: 'maven-publish'
 apply plugin: 'java'
 apply plugin: "com.jfrog.artifactory"
 

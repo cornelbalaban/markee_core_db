@@ -1,8 +1,9 @@
-import models.DaoResponse
-import models.DaoResponseCode
+import core_db.connector.ConnectionData
+import core_db.connector.MarkeeDbConnector
+import core_db.models.DaoResponseCode
 import org.junit.Before
 import org.junit.Test
-import repositories.SignupCodesRepository
+import core_db.repositories.SignupCodesRepository
 import utils.EncryptionUtils
 
 class SignupCodesRepositoryTests {
@@ -16,7 +17,8 @@ class SignupCodesRepositoryTests {
     @Before
     fun setup() {
         val connectionData = ConnectionData("127.0.0.1",3306,"markee_users","cornel","testare")
-        markeeDbConnector = MarkeeDbConnector(connectionData)
+        markeeDbConnector = MarkeeDbConnector()
+        markeeDbConnector.initialize(connectionData)
         encryptionUtils = EncryptionUtils(secret)
         signupCodesRepository = SignupCodesRepository(markeeDbConnector.usersDbConnection(), encryptionUtils)
     }

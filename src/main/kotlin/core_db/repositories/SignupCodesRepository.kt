@@ -1,8 +1,8 @@
-package repositories
+package core_db.repositories
 
-import DbOperationsInterface
-import models.*
-import models.CodeModel
+import core_db.interfaces.DbOperationsInterface
+import core_db.models.*
+import core_db.models.CodeModel
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import utils.EncryptionUtils

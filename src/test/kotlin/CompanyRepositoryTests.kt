@@ -1,3 +1,4 @@
+import core_db.connector.MarkeeDbConnector
 import core_db.repositories.CompanyRepository
 import core_db.models.CompanyModel
 import org.junit.After

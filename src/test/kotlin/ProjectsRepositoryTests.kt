@@ -1,3 +1,4 @@
+import core_db.connector.MarkeeDbConnector
 import core_db.models.ProjectModel
 import core_db.models.ProjectType
 import org.jetbrains.exposed.sql.Database
