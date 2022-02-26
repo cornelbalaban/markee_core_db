@@ -1,20 +1,19 @@
-package repositories
+package core_db.repositories
 
-import DbOperationsInterface
-import models.*
-import models.User
-import models.User.emailUsr
-import models.User.passwordSalt
-import models.User.userId
-import models.User.userName
+import core_db.interfaces.DbOperationsInterface
+import core_db.models.*
+import core_db.models.Tokens
+import core_db.models.User
+import core_db.models.User.emailUsr
+import core_db.models.User.passwordSalt
+import core_db.models.User.userId
+import core_db.models.User.userName
 import org.jetbrains.exposed.exceptions.ExposedSQLException
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
-import java.sql.SQLIntegrityConstraintViolationException
 
 
 class UsersRepository(private val database: Database) : DbOperationsInterface<UserModel, Int, DaoResponse<UserModel>> {
-
 
     override fun create(user: UserModel): DaoResponse<UserModel> {
 

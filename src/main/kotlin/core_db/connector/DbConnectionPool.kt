@@ -1,3 +1,4 @@
+package core_db.connector
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 

@@ -54,7 +54,7 @@ compileTestKotlin {
 String packageGroup = "com.markee"
 String packageName = "coredb"
 String packageVersion = version
-String artifactoryRepository = "coreDb"
+String artifactoryRepository = "java-libs-release-local"
 String artifactoryUser = "cornel.balaban"
 String artifactoryPwd = "Testare_07"
 

@@ -1,7 +1,7 @@
-import models.DaoResponseCode
-import repositories.UsersRepository
-import models.ProjectsKeys
-import models.UserModel
+import core_db.models.DaoResponseCode
+import core_db.repositories.UsersRepository
+import core_db.models.ProjectsKeys
+import core_db.models.UserModel
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.Before
@@ -21,9 +21,12 @@ class DbTests {
 
     @Before
     fun setup() {
-
+        val connectionData = ConnectionData("18.170.44.206",3306,
+            "markee_users","cornek", "testare_07")
         println("---------------Setting up -------------")
         markeeUsersDb = MarkeeDbConnector()
+        markeeUsersDb.initialize(connectionData)
+
         usersRepository  = UsersRepository(markeeUsersDb.usersDbConnection())
         println("---------------Setting up - COMPLETE -------------")
     }
