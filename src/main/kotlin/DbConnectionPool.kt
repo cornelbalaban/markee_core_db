@@ -1,7 +1,5 @@
-
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
-import java.sql.Connection
 
 /**
  * class that provides a connection pool to any mysql, postgres database
@@ -13,15 +11,12 @@ internal class DbConnectionPool(dbHost: String,
                        dbUser: String,
                        dbPass: String) {
 
-
     private val STATEMENTS_CACHE = "cachePrepStmts"
     private val STATEMENTS_CACHE_SIZE = "prepStmtCacheSize"
     private val STATEMENTS_CACHE_SQL_LIMIT = "prepStmtCacheSqlLimit"
 
     private var datasourceConfig: HikariConfig = HikariConfig()
     private var datasource: HikariDataSource
-
-
 
     private val connectionOptions = ""
 
