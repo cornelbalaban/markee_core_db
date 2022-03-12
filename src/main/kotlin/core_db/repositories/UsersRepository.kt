@@ -11,6 +11,7 @@ import core_db.models.User.userName
 import org.jetbrains.exposed.exceptions.ExposedSQLException
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
+import java.sql.SQLIntegrityConstraintViolationException
 
 
 class UsersRepository(private val database: Database) : DbOperationsInterface<UserModel, Int, DaoResponse<UserModel>> {
@@ -37,8 +38,12 @@ class UsersRepository(private val database: Database) : DbOperationsInterface<Us
                     responseMessage = DaoResponseMessage.USER_CREATED
                 }
 
-            } catch (i: ExposedSQLException) {
-
+            } catch (e: ExposedSQLException) {
+                response.apply {
+                    responseCode = DaoResponseCode.USER_ALREADY_EXISTS
+                    responseMessage = DaoResponseMessage.USER_ALREADY_EXISTS
+                }
+            } catch (i: SQLIntegrityConstraintViolationException) {
                 response.apply {
                     responseCode = DaoResponseCode.USER_ALREADY_EXISTS
                     responseMessage = DaoResponseMessage.USER_ALREADY_EXISTS
