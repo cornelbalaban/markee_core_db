@@ -95,7 +95,7 @@ publishing {
             // task (Fat Jar file) as a single artifact that will be published.
             // See documentation for more details: https://docs.gradle.org/current/dsl/org.gradle.api.publish.maven.MavenPublication.html#org.gradle.api.publish.maven.MavenPublication:artifact(java.lang.Object)
             //artifacts = [ jar ]
-            artifact ("$buildDir/libs/markee_core_db-${version}.jar")
+            artifact ("$buildDir/libs/core_db-${version}.jar")
 
             pom.withXml {
                 def dependencies = asNode().appendNode('dependencies')
