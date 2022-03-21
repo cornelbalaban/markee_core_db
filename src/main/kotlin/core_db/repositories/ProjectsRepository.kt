@@ -1,20 +1,15 @@
 package core_db.repositories
 
 import core_db.interfaces.DbOperationsInterface
-import core_db.models.DaoResponse
-import core_db.models.DaoResponseCode
-import core_db.models.DaoResponseMessage
-import core_db.models.ProjectModel
+import core_db.models.*
 import core_db.models.Project
 import core_db.models.Project.projectId
 import core_db.models.Project.projectName
 import core_db.models.Project.projectOwner
 import core_db.models.Project.projectParentCompany
 import core_db.models.Project.projectType
-import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.deleteWhere
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
+import core_db.models.ProjectsKeys
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
 
@@ -43,6 +38,8 @@ class ProjectsRepository(private val database: Database) :
         return DaoResponse(DaoResponseCode.PROJECT_UPDATED, DaoResponseMessage.PROJECT_UPDATED, forObject)
     }
 
+    //TODO once a project is deleted, the key needs to be deleted as well
+    //TBD if trigger on the DB or call method down below
     override fun delete(projectId: Int): Int {
         return (transaction(database) {
             Project.deleteWhere { Project.projectId eq projectId }
@@ -70,9 +67,7 @@ class ProjectsRepository(private val database: Database) :
                 selectedProjects.add(projectForUser)
             }
         }
-
         return selectedProjects
-
     }
 
     /**
@@ -121,6 +116,36 @@ class ProjectsRepository(private val database: Database) :
         }*/
 
         return projectsForUser
+    }
+
+    /**
+     * adds an API key to the project
+     * @param projectId is the projectId for which the key needs to be added
+     * @param apiKey is the apiKey that needs to be added
+     * @return true if the insert is successfull else false
+     */
+    fun addApiKeytoProject(idProject: Long, apiKey: String): Boolean {
+
+        var insertedKey = transaction(database) {
+            ProjectsKeys.insert {
+                it[projectId] = idProject
+                it[projectAccessKey] = apiKey
+            } get ProjectsKeys.projectAccessKey
+        }
+
+        return insertedKey == apiKey
+    }
+
+    /**
+     * deletes apikeys from the db
+     * @param projectId is the projectId for which the key needs to be removed
+     * @param apiKey is the apiKey that needs to be deleted
+     *        if the two above do not form a pair in the database then the deletion will not occur
+     */
+    fun deleteApiKeyForProject(projectId: Long, apiKey: String) {
+        return (transaction(database) {
+            ProjectsKeys.deleteWhere { ProjectsKeys.projectId eq projectId and (ProjectsKeys.projectAccessKey eq apiKey) }
+        })
     }
 
 }
