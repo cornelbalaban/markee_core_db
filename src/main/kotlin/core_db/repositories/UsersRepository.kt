@@ -104,6 +104,12 @@ class UsersRepository(private val database: Database) : DbOperationsInterface<Us
         return null
     }
 
+    fun getUserByEmail(email: String): Int {
+        return transaction(database) {
+            User.select { User.emailUsr eq email } .limit(1).count().toInt()
+        }
+    }
+
     fun delete(byEmail: String): Int = transaction(database) {
         User.deleteWhere { User.emailUsr eq byEmail }
     }
