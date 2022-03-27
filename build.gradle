@@ -12,7 +12,7 @@ apply plugin: 'kotlin'
 
 ext {
     group 'com.markee'
-    version '1.2.1'
+    version '1.2.3-test'
 }
 
 
@@ -83,6 +83,8 @@ artifactory {
 publishing {
     publications {
         jarPublish(MavenPublication) {
+            println("Package name ${packageName}")
+            println("Package group ${packageGroup}")
             groupId packageGroup
             artifactId packageName
             version = packageVersion
@@ -95,7 +97,7 @@ publishing {
             // task (Fat Jar file) as a single artifact that will be published.
             // See documentation for more details: https://docs.gradle.org/current/dsl/org.gradle.api.publish.maven.MavenPublication.html#org.gradle.api.publish.maven.MavenPublication:artifact(java.lang.Object)
             //artifacts = [ jar ]
-            artifact ("$buildDir/libs/core_db-${version}.jar")
+            artifact ("$buildDir/libs/markee_core_db-${version}.jar")
 
             pom.withXml {
                 def dependencies = asNode().appendNode('dependencies')
