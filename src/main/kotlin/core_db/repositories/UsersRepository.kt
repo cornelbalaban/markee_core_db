@@ -104,6 +104,12 @@ class UsersRepository(private val database: Database) : DbOperationsInterface<Us
         return null
     }
 
+    fun emailExists(email: String): Boolean {
+        return transaction(database) {
+            User.select { User.emailUsr eq email }.limit(1).count()
+        } > 0
+    }
+
     fun delete(byEmail: String): Int = transaction(database) {
         User.deleteWhere { User.emailUsr eq byEmail }
     }

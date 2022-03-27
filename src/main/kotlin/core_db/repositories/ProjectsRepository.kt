@@ -124,7 +124,7 @@ class ProjectsRepository(private val database: Database) :
      * @param apiKey is the apiKey that needs to be added
      * @return true if the insert is successfull else false
      */
-    fun addApiKeytoProject(idProject: Long, apiKey: String): Boolean {
+    fun addApiKeytoProject(idProject: Int, apiKey: String): Boolean {
 
         var insertedKey = transaction(database) {
             ProjectsKeys.insert {
@@ -132,7 +132,6 @@ class ProjectsRepository(private val database: Database) :
                 it[projectAccessKey] = apiKey
             } get ProjectsKeys.projectAccessKey
         }
-
         return insertedKey == apiKey
     }
 
@@ -142,10 +141,9 @@ class ProjectsRepository(private val database: Database) :
      * @param apiKey is the apiKey that needs to be deleted
      *        if the two above do not form a pair in the database then the deletion will not occur
      */
-    fun deleteApiKeyForProject(projectId: Long, apiKey: String) {
+    fun deleteApiKeyForProject(projectId: Int, apiKey: String) {
         return (transaction(database) {
             ProjectsKeys.deleteWhere { ProjectsKeys.projectId eq projectId and (ProjectsKeys.projectAccessKey eq apiKey) }
         })
     }
-
 }

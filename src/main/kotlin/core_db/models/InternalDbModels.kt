@@ -31,7 +31,7 @@ internal object CompanyCustomer: Table(MarkeeUsersTables.CUSTOMERS_TABLE.stringV
 
 internal object ProjectsKeys: Table(MarkeeUsersTables.PROJECT_KEYS_TABLE.stringValue) {
 
-    val projectId: Column<Long> = long("id_project_key").uniqueIndex()
+    val projectId: Column<Int> = integer("id_project_key").uniqueIndex()
     val projectAccessKey: Column<String> = varchar("access_key", 50)
 
 }
