@@ -12,7 +12,7 @@ apply plugin: 'kotlin'
 
 ext {
     group 'com.markee'
-    version '1.2.2'
+    version '1.2.3'
 }
 
 
